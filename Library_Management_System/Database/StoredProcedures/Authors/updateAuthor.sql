@@ -1,0 +1,11 @@
+
+
+USE Library
+
+CREATE OR ALTER PROCEDURE updateAuthor(@Id VARCHAR(255) , @Name VARCHAR(255))
+AS
+BEGIN
+
+
+UPDATE Authors SET Name=@Name WHERE Id= @id
+END

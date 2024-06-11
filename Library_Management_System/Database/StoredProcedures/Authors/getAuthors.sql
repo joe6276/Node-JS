@@ -1,0 +1,7 @@
+
+USE Library
+CREATE OR ALTER PROCEDURE getAuthors
+AS
+BEGIN
+SELECT * FROM Authors
+END

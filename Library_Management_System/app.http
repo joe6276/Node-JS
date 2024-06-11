@@ -1,0 +1,55 @@
+GET http://localhost:4000/authors
+
+####
+
+POST  http://localhost:4000/authors
+Content-Type: application/json
+
+{
+    "Name":"Michelle Obama"
+}
+
+
+#####
+
+GET http://localhost:4000/authors/2b3f26a9-edc8-4ab8-9f81-7116dbc1c73a
+
+####
+
+PATCH  http://localhost:4000/authors/2b3f26a9-edc8-4ab8-9f81-7116dbc1c73a
+Content-Type: application/json
+
+{
+    "Name":"Barrack Obama"
+}
+
+####
+
+
+DELETE  http://localhost:4000/authors/2b3f26a9-edc8-4ab8-9f81-7116dbc1c73a
+
+#####
+# Genres API
+
+GET  http://localhost:4000/genres
+
+####
+POST  http://localhost:4000/genres
+Content-Type: application/json
+
+{
+    "Name":"Fiction"
+}
+
+
+#####
+
+POST  http://localhost:4000/books
+Content-Type: application/json
+
+{
+    "Title":"The AI Era",
+    "PublicationYear":2000,
+    "AuthorId":"8e939b77-0c34-4f45-a034-f0f37bfa6fb2",
+    "GenreId":"b6909696-ce02-43b9-a444-4fa6c8ee0a8b"
+}

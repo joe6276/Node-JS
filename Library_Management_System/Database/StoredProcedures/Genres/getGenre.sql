@@ -1,0 +1,7 @@
+
+USE Library
+CREATE OR ALTER PROCEDURE getGenres
+AS
+BEGIN
+SELECT * FROM Genre
+END

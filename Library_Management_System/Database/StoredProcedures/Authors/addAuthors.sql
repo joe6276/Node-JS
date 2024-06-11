@@ -1,0 +1,8 @@
+
+USE Library
+CREATE OR ALTER PROCEDURE addAuthor (@Id VARCHAR(255), @Name VARCHAR(255))
+AS
+BEGIN
+
+INSERT INTO Authors(Id, Name) VALUES(@Id, @Name)
+END
