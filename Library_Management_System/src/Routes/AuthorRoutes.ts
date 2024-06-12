@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { addAuthor, deleteAuthor, getAuthor, getAuthors, updateAuthor } from "../Controllers/authorController";
 
-const authRouter = Router()
+const authorRouter = Router()
 
-authRouter.post("",addAuthor)
-authRouter.get("", getAuthors)
-authRouter.get("/:id", getAuthor)
-authRouter.patch("/:id", updateAuthor)
-authRouter.delete("/:id", deleteAuthor)
-export default authRouter
+authorRouter.post("",addAuthor)
+authorRouter.get("", getAuthors)
+authorRouter.get("/:id", getAuthor)
+authorRouter.patch("/:id", updateAuthor)
+authorRouter.delete("/:id", deleteAuthor)
+export default authorRouter

@@ -1,0 +1,8 @@
+USE Library
+
+CREATE OR ALTER PROCEDURE getUSer(@Email VARCHAR(255))
+AS
+
+BEGIN
+SELECT * FROM Users WHERE Email=@Email
+END

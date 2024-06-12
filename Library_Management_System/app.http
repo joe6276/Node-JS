@@ -53,3 +53,58 @@ Content-Type: application/json
     "AuthorId":"8e939b77-0c34-4f45-a034-f0f37bfa6fb2",
     "GenreId":"b6909696-ce02-43b9-a444-4fa6c8ee0a8b"
 }
+
+
+#####
+
+
+POST  http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+    "Name":"John",
+    "Email":"john@gmail.com",
+    "Password":"John@200"
+}
+
+#$2b$10$2qO6Ou49Aipjv2iAq4KU6.FGFSksSJhExBQzM92iZOfeieijULsg2
+
+#####
+
+POST  http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+    "Email":"john@gmail.com",
+    "Password":"John@200"
+}
+
+#####
+POST  http://localhost:4000/auth/register
+Content-Type: application/json
+
+{   
+    "Name":"James",
+    "Email":"james@gmail.com",
+    "Password":"John@200"
+}
+
+#####
+POST  http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+    "Email":"james@gmail.com",
+    "Password":"John@200"
+}
+
+
+#####
+GET  http://localhost:4000/books
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWIiOiJmZTM1YTZmYi02N2U2LTRmZGYtYjZhNS0wNDFhY2FmZDkyYmQiLCJOYW1lIjoiSm9obiIsImlhdCI6MTcxODE3ODkzOCwiZXhwIjoxNzE4MTg2MTM4fQ.xpo_dlm3mhLKCl4POVQp40b5ye1y8KXYaQgw4RJzAlo
+
+
+#####
+
+GET  http://localhost:4000/auth
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWIiOiJmMGUzNGU1MS0xZDI0LTQxNTYtOTgzMy0yYWE3ZjkwYWFmNWEiLCJOYW1lIjoiSmFtZXMiLCJpYXQiOjE3MTgxNzkzODIsImV4cCI6MTcxODE4NjU4Mn0.PPmL2UufmfqVmSI5HUtORNQyNs8BskmpdU12IfpAFXQ
