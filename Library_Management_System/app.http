@@ -6,21 +6,21 @@ POST  http://localhost:4000/authors
 Content-Type: application/json
 
 {
-    "Name":"Michelle Obama"
+    "Name":"Margaret Ogolla"
 }
 
 
 #####
 
-GET http://localhost:4000/authors/2b3f26a9-edc8-4ab8-9f81-7116dbc1c73a
+GET http://localhost:4000/authors/9961ecf6-f559-430d-b9f8-7ff8f532f401
 
 ####
 
-PATCH  http://localhost:4000/authors/2b3f26a9-edc8-4ab8-9f81-7116dbc1c73a
+PATCH  http://localhost:4000/authors/9961ecf6-f559-430d-b9f8-7ff8f532f401
 Content-Type: application/json
 
 {
-    "Name":"Barrack Obama"
+    "Name":"John Doe"
 }
 
 ####
@@ -62,8 +62,8 @@ POST  http://localhost:4000/auth/register
 Content-Type: application/json
 
 {
-    "Name":"John",
-    "Email":"john@gmail.com",
+    "Name":"Tony",
+    "Email":"tony.kahare@gmail.com",
     "Password":"John@200"
 }
 
@@ -75,7 +75,7 @@ POST  http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-    "Email":"john@gmail.com",
+    "Email":"jonathanndambuki16@gmail.com",
     "Password":"John@200"
 }
 
@@ -84,7 +84,7 @@ POST  http://localhost:4000/auth/register
 Content-Type: application/json
 
 {   
-    "Name":"James",
+    "Name":"Jonathan",
     "Email":"james@gmail.com",
     "Password":"John@200"
 }

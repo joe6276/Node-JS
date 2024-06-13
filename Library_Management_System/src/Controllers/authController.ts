@@ -1,17 +1,17 @@
 import {Request,Response,RequestHandler} from 'express'
 import {v4 as uid} from 'uuid'
-import { sqlConfig } from '../config'
-import mssql from 'mssql'
 import { RegisterSchema } from '../Helpers'
 import Bcrypt from 'bcrypt'
-import { idText } from 'typescript'
 import { Payload, User } from '../Models/authModels'
 import jwt  from 'jsonwebtoken'
 import path from 'path'
 import dotenv from 'dotenv'
 import { ExtendedRequest1 } from '../middlewares'
+import { DbHelper } from '../DatabaseHelpers'
 dotenv.config({path:path.resolve(__dirname,"../../.env")})
 
+
+const dbInstance = new DbHelper()
 
 export const registerUser=async(req:Request, res:Response)=>{
    try {
@@ -22,13 +22,7 @@ export const registerUser=async(req:Request, res:Response)=>{
       return   res.status(400).json(error.details[0].message)
     }
     const HashPassword = await Bcrypt.hash(Password,10)
-    let pool = await mssql.connect(sqlConfig)
-    await pool.request()
-    .input("Id",id)
-    .input("Name",Name)
-    .input("Email",Email)
-    .input("Password", HashPassword)
-    .execute("addUser")
+     await dbInstance.exec('addUser', {Id:id, Name,Email, Password:HashPassword})
 
     return res.status(201).json({Message:"User Was Added SuccessfullY!!"})
    } catch (error) {
@@ -41,11 +35,8 @@ export const registerUser=async(req:Request, res:Response)=>{
 export const loginUser=async (req:Request, res:Response)=>{
     try {
         const { Email,Password}=req.body
-
-        let pool = await mssql.connect(sqlConfig)
-         let user=(await pool.request()
-        .input("Email",Email)
-        .execute('getUSer')).recordset as User[]
+        let user=(await dbInstance.exec('getUSer', {Email})).recordset as User[]
+      
 
         /// validate is user is not undefined
         // password is correct
@@ -58,7 +49,7 @@ export const loginUser=async (req:Request, res:Response)=>{
                 Sub: user[0].Id,
                 Name:user[0].Name
             }
-            const token = await jwt.sign(payload,process.env.SECRET as string, {expiresIn:'2h'} )
+            const token = jwt.sign(payload,process.env.SECRET as string, {expiresIn:'2h'} )
             return res.status(200).json({message:"Login success!!", token})  
         }
         }

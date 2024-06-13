@@ -1,23 +1,17 @@
 import {Request,Response,RequestHandler} from 'express'
 import {v4 as uid} from 'uuid'
-import { sqlConfig } from '../config'
-import mssql from 'mssql'
 import { Book, BookRequest } from '../Models/BookModel'
+import { DbHelper } from '../DatabaseHelpers'
 
+
+let dbInstance= new DbHelper()
 export const addBook=async (req:BookRequest,res:Response)=>{
     try {
         
 
         const {AuthorId,GenreId,PublicationYear,Title}=req.body
         const id=uid()
-        let pool= await mssql.connect(sqlConfig)
-        await pool.request()
-        .input('Id',id)
-        .input('Title',Title)
-        .input('PublicationYear',+PublicationYear)
-        .input('AuthorId',AuthorId)
-        .input('GenreId',GenreId)
-        .execute('addBook')
+        await dbInstance.exec('addBook', {Id:id, Title,PublicationYear:+PublicationYear, AuthorId,GenreId})
         return res.status(201).send('<h1> Book Added</h1>')
     } catch (error) {
         return res.status(500).json(error)
@@ -26,8 +20,7 @@ export const addBook=async (req:BookRequest,res:Response)=>{
 
 export const getBooks=async (req:Request,res:Response)=>{
     try {
-        let pool= await mssql.connect(sqlConfig)
-        const books= (await pool.request().execute('getBooks')).recordset as Book[]
+        const books =(await dbInstance.exec('getBooks', {})).recordset as Book[]
         return res.status(200).json(books)
        
     } catch (error:any) {
@@ -37,11 +30,7 @@ export const getBooks=async (req:Request,res:Response)=>{
 
 export const getBook=async (req:Request<{id:string}>,res:Response)=>{
     try {
-        let pool= await mssql.connect(sqlConfig)
-       const book= (await pool.request()
-        .input('Id',req.params.id)
-        .execute('getBook')).recordset[0] as Book
-
+         const book=(await dbInstance.exec('getBook', {Id:req.params.id})).recordset[0] as Book 
         if(book && book.Id){
             return res.status(200).json(book)
         }
@@ -53,20 +42,10 @@ export const getBook=async (req:Request<{id:string}>,res:Response)=>{
 export const updateBook=async (req:Request<{id:string}>,res:Response)=>{
     try {
         
-        let pool= await mssql.connect(sqlConfig)
-        const book= (await pool.request()
-         .input('Id',req.params.id)
-         .execute('getBook')).recordset[0] as Book
- 
+        const book=(await dbInstance.exec('getBook', {Id:req.params.id})).recordset[0] as Book 
          if(book && book.Id){
             const {AuthorId,GenreId,PublicationYear,Title}=req.body
-            await pool.request()
-            .input('Id',req.params.id)
-            .input('Title',Title)
-            .input('PublicationYear',+PublicationYear)
-            .input('AuthorId',AuthorId)
-            .input('GenreId',GenreId)
-            .execute('updateBook')
+            await dbInstance.exec('updateBook', {Id:req.params.id, Title,PublicationYear:+PublicationYear, AuthorId,GenreId})
              return res.status(200).json({message:"Book Updated!"})
          }
          return res.status(404).json({Message:'Book not Found!'})
@@ -76,16 +55,10 @@ export const updateBook=async (req:Request<{id:string}>,res:Response)=>{
 }
 export const deleteBook=async (req:Request<{id:string}>,res:Response)=>{
     try {
-        let pool= await mssql.connect(sqlConfig)
-        const book= (await pool.request()
-         .input('Id',req.params.id)
-         .execute('getBook')).recordset[0] as Book
+        const book=(await dbInstance.exec('getBook', {Id:req.params.id})).recordset[0] as Book 
  
          if(book && book.Id){
-            await pool.request()
-            // .query(`DELETE FROM Book WHERE Id='${req.params.id}'`)
-            .input('Id', req.params.id)
-            .execute('deleteBook')
+            await dbInstance.exec('deleteBook', {Id:req.params.id})
              return res.status(200).json({Message:"Book deleted Sucessfully!!"})
          }
          return res.status(404).json({Message:'Book not Found!'})
